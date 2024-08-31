@@ -1,8 +1,8 @@
-import BaseScreen from '@/core/components/base-screen.components'
+import BaseScreen from '@/core/component/base-screen.component'
 import $K from '@/core/kquery/kquery.lib'
 import renderService from '@/core/services/render.service'
 
-import { Button } from '@/components/ui/button/button.component'
+import { UserItem } from '@/components/ui/user-item/user-item.component'
 
 import styles from './home.module.scss'
 import template from './home.template.html'
@@ -15,11 +15,15 @@ export class Home extends BaseScreen {
 		const element = renderService.htmlToElement(
 			template,
 			[
-				new Button({
-					children: 'Send',
-					onClick: () => alert('Clicked'),
-					variant: 'green'
-				})
+				new UserItem(
+					{
+						avatarPath:
+							'https://i.pinimg.com/736x/b7/5b/29/b75b29441bbd967deda4365441497221.jpg',
+						name: 'Kirill Vegele'
+					},
+					true,
+					() => alert('H')
+				)
 			],
 			styles
 		)

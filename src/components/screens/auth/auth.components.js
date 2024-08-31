@@ -1,4 +1,4 @@
-import BaseScreen from '@/core/components/base-screen.components'
+import BaseScreen from '@/core/component/base-screen.component'
 
 export class Auth extends BaseScreen {
 	constructor() {

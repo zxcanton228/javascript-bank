@@ -1,5 +1,5 @@
-import ChildComponent from '@/core/component/child.component.js'
-import { $R } from '@/core/rquery/rquery.lib'
+import ChildComponent from '@/core/component/child.components'
+import $K from '@/core/kquery/kquery.lib'
 import renderService from '@/core/services/render.service.js'
 
 import styles from './user-item.module.scss'
@@ -23,8 +23,8 @@ export class UserItem extends ChildComponent {
 	}
 	update({ avatarPath, name }) {
 		if (avatarPath && name) {
-			$R(this.element).find('img').attr('src', avatarPath).attr('alt', name)
-			$R(this.element).find('span').text(name)
+			$K(this.element).find('img').attr('src', avatarPath).attr('alt', name)
+			$K(this.element).find('span').text(name)
 		}
 	}
 
@@ -33,10 +33,10 @@ export class UserItem extends ChildComponent {
 
 		this.update(this.user)
 
-		$R(this.element).click(this.onClick || this.#preventDefault.bind(this))
+		$K(this.element).click(this.onClick || this.#preventDefault.bind(this))
 
-		if (!this.onClick) $R(this.element).attr('disabled', '')
-		if (this.isGray) $R(this.element).addClass(styles.gray)
+		if (!this.onClick) $K(this.element).attr('disabled', '')
+		if (this.isGray) $K(this.element).addClass(styles.gray)
 
 		return this.element
 	}

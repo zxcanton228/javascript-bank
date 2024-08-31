@@ -1,5 +1,5 @@
 import ChildComponent from '@/core/component/child.component.js'
-import { $R } from '@/core/rquery/rquery.lib'
+import $K from '@/core/kquery/kquery.lib'
 import renderService from '@/core/services/render.service.js'
 
 import styles from './heading.module.scss'
@@ -13,7 +13,7 @@ export class Heading extends ChildComponent {
 	render() {
 		this.element = renderService.htmlToElement(template, [], styles)
 
-		$R(this.element).text(this.title)
+		$K(this.element).text(this.title)
 
 		return this.element
 	}
