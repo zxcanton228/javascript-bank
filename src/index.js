@@ -1,1 +1,1 @@
-console.log('penis')
+import './styles/global.scss'
