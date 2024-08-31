@@ -1,4 +1,4 @@
-import ChildComponent from '@/core/component/child.components'
+import ChildComponent from '@/core/component/child.component'
 import $K from '@/core/kquery/kquery.lib'
 import renderService from '@/core/services/render.service.js'
 
