@@ -1,0 +1,13 @@
+import ChildComponent from '@/core/components/child.components'
+import renderService from '@/core/services/render.service.js'
+
+import styles from './header.module.scss'
+import template from './header.template.html'
+
+export class Header extends ChildComponent {
+	render() {
+		this.element = renderService.htmlToElement(template, [], styles)
+
+		return this.element
+	}
+}
