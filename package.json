@@ -1,0 +1,44 @@
+{
+	"name": "JSBank",
+	"version": "2.0.0",
+	"description": "Kirove Bank is a customer-centric financial institution, offering a wide range of banking services with a focus on security, convenience, and competitive rates. Committed to community development, Kirove Bank prioritizes sustainable lending and financial education initiatives.",
+	"repository": "https://github.com/zxcanton228/javascript-bank",
+	"author": {
+		"name": "Kirill Vegele"
+	},
+	"license": "UNLICENSE",
+	"engines": {
+		"node": "22.2.0"
+	},
+	"main": "webpack.config.js",
+	"scripts": {
+		"dev": "webpack serve --mode development --open",
+		"build": "webpack --mode production"
+	},
+	"private": true,
+	"devDependencies": {
+		"@babel/core": "^7.21.4",
+		"@babel/preset-env": "^7.21.4",
+		"@trivago/prettier-plugin-sort-imports": "^4.1.1",
+		"babel-core": "^6.26.3",
+		"babel-eslint": "^10.1.0",
+		"babel-loader": "^9.1.2",
+		"clean-webpack-plugin": "^4.0.0",
+		"css-loader": "^6.7.3",
+		"css-minimizer-webpack-plugin": "^5.0.0",
+		"dotenv": "^16.0.3",
+		"eslint": "^8.39.0",
+		"file-loader": "^6.2.0",
+		"html-loader": "^4.2.0",
+		"html-webpack-plugin": "^5.5.1",
+		"mini-css-extract-plugin": "^2.7.5",
+		"prettier": "^2.8.8",
+		"sass": "^1.62.1",
+		"sass-loader": "^13.2.2",
+		"style-loader": "^3.3.2",
+		"terser-webpack-plugin": "^5.3.7",
+		"webpack": "^5.81.0",
+		"webpack-cli": "^5.0.2",
+		"webpack-dev-server": "^4.15.1"
+	}
+}
