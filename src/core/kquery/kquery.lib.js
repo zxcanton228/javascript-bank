@@ -2,10 +2,6 @@
  * Represents the KQuery class for working with DOM elements.
  */
 
-const isNotFoundError = (element, selector) => {
-	if (!element) throw new Error(`Element ${selector} not found!`)
-}
-
 class KQuery {
 	/**
 	 * Create a new KQuery instance.
@@ -13,14 +9,19 @@ class KQuery {
 	 */
 	constructor(selector) {
 		if (typeof selector === 'string') {
-			isNotFoundError(this.element, selector)
 			this.element = document.querySelector(selector)
+
+			if (!this.element) {
+				throw new Error(`Element ${selector} not found!`)
+			}
 		} else if (selector instanceof HTMLElement) {
 			this.element = selector
 		} else {
 			throw new Error('Invalid selector type')
 		}
 	}
+
+	/* FIND */
 
 	/**
 	 * Find the first element that matches the specified selector within the selected element.
@@ -29,24 +30,15 @@ class KQuery {
 	 */
 	find(selector) {
 		const element = new KQuery(this.element.querySelector(selector))
-		isNotFoundError(element, selector)
-		return element
-	}
 
-	/**
-	 * Set the CSS style of the selected element.
-	 * @param {string} property - The CSS property to set.
-	 * @param {string} value - The value to set for the CSS property.
-	 * @returns {KQuery} The current KQuery instance for chaining.
-	 */
-	css(property, value) {
-		if (typeof property !== 'string' || typeof value !== 'string') {
-			throw new Error('property and value must be strings')
+		if (element) {
+			return element
+		} else {
+			throw new Error(`Element ${selector} not found!`)
 		}
-
-		this.element.style[property] = value
-		return this
 	}
+
+	/* INSERT */
 
 	/**
 	 * Append a new element as a child of the selected element.
@@ -70,14 +62,45 @@ class KQuery {
 
 		const parentElement = this.element.parentElement
 
-		if (!parentElement)
+		if (parentElement) {
+			parentElement.insertBefore(newElement, this.element)
+			return this
+		} else {
 			throw new Error('Element does not have a parent element')
+		}
+	}
 
-		parentElement.insertBefore(newElement, this.element)
+	/**
+	 * Get or set the inner HTML of the selected element.
+	 * @param {string} [htmlContent] - Optional HTML content to set. If not provided, the current inner HTML will be returned.
+	 * @returns {KQuery|string} The current KQuery instance for chaining when setting HTML content, or the current inner HTML when getting.
+	 */
+	html(htmlContent) {
+		if (typeof htmlContent === 'undefined') {
+			return this.element.innerHTML
+		} else {
+			this.element.innerHTML = htmlContent
+			return this
+		}
+	}
+
+	/* STYLES */
+
+	/**
+	 * Set the CSS style of the selected element.
+	 * @param {string} property - The CSS property to set.
+	 * @param {string} value - The value to set for the CSS property.
+	 * @returns {KQuery} The current KQuery instance for chaining.
+	 */
+	css(property, value) {
+		if (typeof property !== 'string' || typeof value !== 'string') {
+			throw new Error('property and value must be strings')
+		}
+
+		this.element.style[property] = value
 		return this
 	}
 }
-
 /**
  * Create a new KQuery instance for the given selector.
  * @param {string|HTMLElement} selector - A CSS selector string or an HTMLElement.

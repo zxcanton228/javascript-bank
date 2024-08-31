@@ -1,7 +1,9 @@
-import { ROUTES } from '@/core/router/routes.data'
+import $K from '@/core/kquery/kquery.lib'
 
 import { Layout } from '@/components/layout/layout.components'
 import NotFound from '@/components/screens/not-found/not-found.components'
+
+import { ROUTES } from './routes.data'
 
 export class Router {
 	#routes = ROUTES
@@ -54,16 +56,17 @@ export class Router {
 	}
 
 	#render() {
-		const component = new this.#currentRoute.component()
+		const component = new this.#currentRoute.component().render()
 
 		if (!this.#layout) {
 			this.#layout = new Layout({
 				router: this,
-				children: component.render()
-			})
-			document.getElementById('app').innerHTML = this.#layout.render()
+				children: component
+			}).render()
+
+			$K('#app').append(this.#layout)
 		} else {
-			document.querySelector('main').innerHTML = component.render()
+			$K('#content').html('').append(component)
 		}
 	}
 }
