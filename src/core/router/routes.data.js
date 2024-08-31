@@ -1,4 +1,5 @@
 import { AboutUs } from '@/components/screens/about-us/about-us.components'
+import { Auth } from '@/components/screens/auth/auth.components'
 import { Home } from '@/components/screens/home/home.components'
 
 export const ROUTES = [
@@ -12,6 +13,6 @@ export const ROUTES = [
 	},
 	{
 		path: '/auth',
-		component: Home
+		component: Auth
 	}
 ]

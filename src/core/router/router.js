@@ -8,6 +8,8 @@ export class Router {
 	constructor() {
 		this.#routes = ROUTES
 		this.#currentRoute = null
+
+		this.#handleRouteChange()
 	}
 	getCurrentPath() {
 		return window.location.pathname
