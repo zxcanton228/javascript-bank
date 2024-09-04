@@ -1,6 +1,6 @@
 import $K from '@/core/kquery/kquery.lib'
 
-import { Layout } from '@/components/layout/layout.components'
+import { Layout } from '@/components/layout/layout.component'
 import NotFound from '@/components/screens/not-found/not-found.components'
 
 import { ROUTES } from './routes.data'
