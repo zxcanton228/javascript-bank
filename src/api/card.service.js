@@ -1,5 +1,5 @@
 import { kiroveQuery } from '@/core/kirove-query/kirove-query.lib'
-import { NotificationService } from '@/core/services/notification.service'
+import NotificationService from '@/core/services/notification.service'
 import Store from '@/core/store/store'
 
 export class CardService {

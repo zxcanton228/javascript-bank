@@ -24,6 +24,22 @@ class KQuery {
 
 	/* EVENTS */
 	/**
+	 * Add an event listener to the selected element for the specified event type.
+	 * @param {string} eventType - The type of event to listen for (e.g., 'click', 'input', etc.).
+	 * @param {function(Event): void} callback - The event listener function to execute when the event is triggered. The function will receive the event object as its argument.
+	 * @returns {KQuery} The current KQuery instance for chaining.
+	 */
+	on(eventType, callback) {
+		if (typeof eventType !== 'string' || typeof callback !== 'function') {
+			throw new Error(
+				'eventType must be a string and callback must be a function'
+			)
+		}
+
+		this.element.addEventListener(eventType, callback)
+		return this
+	}
+	/**
 	 * Attach a click event listener to the selected element.
 	 * @param {function(Event): void} callback - The event listener function to execute when the selected element is clicked. The function will receive the event object as its argument.
 	 * @returns {tQuery} The current tQuery instance for chaining.
@@ -126,6 +142,16 @@ class KQuery {
 		}
 	}
 
+	/**
+	 * Find all elements that match the specified selector within the selected element.
+	 * @param {string} selector - A CSS selector string to search for within the selected element.
+	 * @returns {KQuery[]} An array of new KQuery instances for the found elements.
+	 */
+	findAll(selector) {
+		const elements = this.element.querySelectorAll(selector)
+		return Array.from(elements).map(element => new KQuery(element))
+	}
+
 	/* INSERT */
 
 	/**
@@ -197,7 +223,7 @@ class KQuery {
 	}
 	/**
 	 * Hides the selected element by setting its display style to 'none'.
-	 * @returns {RQuery} The current RQuery instance for chaining.
+	 * @returns {KQuery} The current KQuery instance for chaining.
 	 */
 	hide() {
 		this.element.style.display = 'none'
