@@ -19,18 +19,24 @@ export class Header extends ChildComponent {
 		this.store.addObserver(this)
 
 		this.router = router
+
+		this.userItem = new UserItem(
+			{
+				avatarPath: '/',
+				name: 'default'
+			},
+			true
+		)
 	}
 	update() {
 		this.user = this.store.state.user
 		const authSideElement = $K(this.element).find('#auth-side')
 		if (this.user) {
 			authSideElement.show()
+			this.userItem.update(this.user)
+			this.router.navigate('/')
 		} else {
 			authSideElement.hide()
-		}
-
-		if (this.user && this.router.getCurrentPath() === '/auth') {
-			this.router.navigate('/')
 		}
 	}
 	render() {
@@ -42,20 +48,12 @@ export class Header extends ChildComponent {
 					router: this.router
 				}),
 				Search,
-				new UserItem(
-					{
-						avatarPath:
-							'https://i.pinimg.com/736x/b7/5b/29/b75b29441bbd967deda4365441497221.jpg',
-						name: 'Kirill Vegele'
-					},
-					true,
-					() => alert('Hello, Kirill Vegele')
-				)
+				this.userItem
 			],
 			styles
 		)
 
-		this.update
+		this.update()
 
 		return this.element
 	}
