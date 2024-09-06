@@ -1,11 +1,13 @@
 import { kiroveQuery } from '@/core/kirove-query/kirove-query.lib'
 import { NotificationService } from '@/core/services/notification.service'
+import Store from '@/core/store/store'
 
 export class CardService {
 	#BASE_URL = '/cards'
 
 	constructor() {
-		// store
+		this.store = Store.getInstance()
+
 		this.notificationService = new NotificationService()
 	}
 
@@ -54,9 +56,9 @@ export class CardService {
 			path: `${this.#BASE_URL}/transfer-money`,
 			method: 'PATCH',
 			body: {
-				amount: +amount
-				// fromCardNumber: this.store.user.card.number,
-				// toCardNumber
+				amount: +amount,
+				fromCardNumber: this.store.user.card.number,
+				toCardNumber
 			},
 			onSuccess: () => {
 				this.notificationService.show(
