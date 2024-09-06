@@ -2,9 +2,11 @@ import ChildComponent from '@/core/component/child.component'
 import $K from '@/core/kquery/kquery.lib'
 import renderService from '@/core/services/render.service.js'
 
+import { TRANSFER_FIELD_SELECTOR } from '@/components/screens/home/contacts/transfer-field/transfer-field.component'
 import { UserItem } from '@/components/ui/user-item/user-item.component'
 
 import debounce from '@/utils/debounce.util'
+import { formatCardNumberWithDashes } from '@/utils/format/format-card-number'
 
 import { UserService } from '@/api/user.service'
 
@@ -28,6 +30,10 @@ export class Search extends ChildComponent {
 			searchResultElement.html('')
 			users.forEach((user, index) => {
 				const userItem = new UserItem(user, true, () => {
+					$K(TRANSFER_FIELD_SELECTOR).value(
+						formatCardNumberWithDashes(user.card.number)
+					)
+
 					searchResultElement.html('')
 				}).render()
 				$K(userItem)

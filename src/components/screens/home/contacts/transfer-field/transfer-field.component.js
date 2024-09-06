@@ -18,6 +18,8 @@ import {
 	TRANSACTION_COMPLETED
 } from '@/constants/event.constants'
 
+export const TRANSFER_FIELD_SELECTOR = '[name="card-number"]'
+
 export class TransferField extends ChildComponent {
 	constructor() {
 		super()
