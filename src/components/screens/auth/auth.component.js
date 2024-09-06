@@ -1,6 +1,8 @@
 import BaseScreen from '@/core/component/base-screen.component'
 import $K from '@/core/kquery/kquery.lib'
+import formService from '@/core/services/form.service'
 import renderService from '@/core/services/render.service.js'
+import validationService from '@/core/services/validation.service'
 
 import { Button } from '@/components/ui/button/button.component'
 import { Field } from '@/components/ui/field/field.component'
@@ -28,7 +30,17 @@ export class Auth extends BaseScreen {
 		this.#isTypeLogin = !this.#isTypeLogin
 	}
 	#handleSubmit = event => {
-		console.log(event.target)
+		const formValues = formService.getFormValues(event.target)
+		if (!this.#validateFields(formValues)) return
+	}
+	#validateFields(formValues) {
+		const emailLabel = $K(this.element).find('label:first-child')
+		const passwordLabel = $K(this.element).find('label:last-child')
+
+		if (!formValues.email) validationService.showError(emailLabel)
+		if (!formValues.password) validationService.showError(passwordLabel)
+
+		return formValues.email && formValues.password
 	}
 
 	render() {
