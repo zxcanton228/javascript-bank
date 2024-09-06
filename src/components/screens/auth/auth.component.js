@@ -32,6 +32,10 @@ export class Auth extends BaseScreen {
 	#handleSubmit = event => {
 		const formValues = formService.getFormValues(event.target)
 		if (!this.#validateFields(formValues)) return
+
+		const type = this.#isTypeLogin ? 'login' : 'register'
+
+		this.authService.main(type, formValues)
 	}
 	#validateFields(formValues) {
 		const emailLabel = $K(this.element).find('label:first-child')
@@ -39,6 +43,12 @@ export class Auth extends BaseScreen {
 
 		if (!formValues.email) validationService.showError(emailLabel)
 		if (!formValues.password) validationService.showError(passwordLabel)
+
+		const isEmail = String(formValues.email).match(
+			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+		)
+
+		if (!isEmail) validationService.showError(emailLabel)
 
 		return formValues.email && formValues.password
 	}
