@@ -55,6 +55,7 @@ export class Contacts extends ChildComponent {
 				})
 		})
 	}
+
 	render() {
 		this.element = renderService.htmlToElement(
 			template,
@@ -67,7 +68,7 @@ export class Contacts extends ChildComponent {
 				.find('#contacts-list')
 				.html(new Loader().render().outerHTML)
 
-			this.fetchData()
+			setTimeout(() => this.fetchData(), 500)
 		}
 
 		return this.element

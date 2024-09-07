@@ -3,6 +3,8 @@ import $K from '@/core/kquery/kquery.lib'
 import renderService from '@/core/services/render.service.js'
 import Store from '@/core/store/store'
 
+import { Loader } from '@/components/ui/loader/loader.component'
+
 import { formatCardNumber } from '@/utils/format/format-card-number'
 import { formatToCurrency } from '@/utils/format/format-to-currency'
 
@@ -19,12 +21,28 @@ export class CardInfo extends ChildComponent {
 	constructor() {
 		super()
 
+		this.store = Store.getInstance()
 		this.cardService = new CardService()
-		this.store = new Store.getInstance()
 
 		this.element = renderService.htmlToElement(template, [], styles)
 
 		this.#addListeners()
+	}
+
+	#addListeners() {
+		document.addEventListener(BALANCE_UPDATED, this.#onBalanceUpdated)
+	}
+
+	#removeListeners() {
+		document.removeEventListener(BALANCE_UPDATED, this.#onBalanceUpdated)
+	}
+
+	#onBalanceUpdated = () => {
+		this.fetchData()
+	}
+
+	destroy() {
+		this.#removeListeners()
 	}
 
 	#copyCardNumber(e) {
@@ -35,23 +53,12 @@ export class CardInfo extends ChildComponent {
 			}, 2000)
 		})
 	}
+
 	#toggleCvc(cardCvcElement) {
 		const text = cardCvcElement.text()
 		text === CODE
 			? cardCvcElement.text(this.card.cvc)
 			: cardCvcElement.text(CODE)
-	}
-	#addListeners() {
-		document.addEventListener(BALANCE_UPDATED, this.#onBalanceUpdate)
-	}
-	#removeListener() {
-		document.removeEventListener(BALANCE_UPDATED, this.#onBalanceUpdate)
-	}
-	#onBalanceUpdate = () => {
-		this.fetchData()
-	}
-	destroy() {
-		this.#removeListener()
 	}
 
 	fillElements() {
@@ -83,6 +90,7 @@ export class CardInfo extends ChildComponent {
 			.find('#card-balance')
 			.text(formatToCurrency(this.card.balance))
 	}
+
 	fetchData() {
 		this.cardService.byUser(data => {
 			if (data?.id) {
@@ -94,8 +102,12 @@ export class CardInfo extends ChildComponent {
 			}
 		})
 	}
+
 	render() {
-		if (this.store.state.user) this.fetchData()
+		if (this.store.state.user) {
+			$K(this.element).html(new Loader().render().outerHTML)
+			setTimeout(() => this.fetchData(), 500)
+		}
 
 		return this.element
 	}
