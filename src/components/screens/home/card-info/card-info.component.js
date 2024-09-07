@@ -13,7 +13,7 @@ import template from './card-info.template.html'
 
 import { BALANCE_UPDATED } from '@/constants/event.constants'
 
-const CODE = '*****'
+const CODE = '***'
 
 export class CardInfo extends ChildComponent {
 	constructor() {
