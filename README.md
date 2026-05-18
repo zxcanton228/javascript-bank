@@ -3,5 +3,5 @@
 <p>Материалы: https://htmllessons.io</p>
 
 env template:
-NODE_ENV=
-PORT= // 7777
+NODE_ENV="production"
+PORT=7777
